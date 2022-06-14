@@ -31,6 +31,8 @@ npm install @swc/core @swc/jest --save-dev
 npm install @types/lodash --save-dev
 npm install uuid 
 npm install @types/uuid --save-dev
+npm install class-validator
+npm install regenerator-runtime --save-dev
 
 # alterar o arquivo tsconfig.json
 
@@ -60,3 +62,6 @@ transform: {
 # https://github.com/romkatv/powerlevel10k#oh-my-zsh
 
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+npm run test -- --coverage
+npm run tsc -- --noEmit

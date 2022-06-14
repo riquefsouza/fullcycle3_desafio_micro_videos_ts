@@ -23,7 +23,7 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  // coverageDirectory: undefined,
+  coverageDirectory: '<rootDir>/../__coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -35,14 +35,30 @@ export default {
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
-  //   "json",
+     // "json",
+     // "html"
   //   "text",
   //   "lcov",
   //   "clover"
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  /*
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80
+    },
+    "./src/category/domain": {
+      statements: 100,
+      branches: 100,
+      functions: 100,
+      lines: 100
+    }
+  },
+  */
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -135,7 +151,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ["./@seedwork/domain/tests/validations.ts"],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

@@ -4,9 +4,16 @@ import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entit
 
 describe("Category Unit Tests", () => {
 
+  beforeEach(() => {
+    Category.validate = jest.fn();
+  });
+
   test("constructor of category", () => {
     let category = new Category({ name: "Movie" });
     let props = omit(category.props, "created_at");
+    
+    expect(Category.validate).toHaveBeenCalled();
+
     expect(props).toStrictEqual({
       name: "Movie",
       description: null,
@@ -80,6 +87,7 @@ describe("Category Unit Tests", () => {
     data.forEach((i: CategoryData) => {
       const category = new Category(i.props, i.id);
       expect(category.id).not.toBeNull();
+      expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     });
   });
 
@@ -149,6 +157,7 @@ describe("Category Unit Tests", () => {
   test("should update a category", () => {
     const category = new Category({ name: "Movie" });
     category.update("Movie updated", "description updated");
+    expect(Category.validate).toHaveBeenCalledTimes(2);
     expect(category.name).toBe("Movie updated");
     expect(category.description).toBe("description updated");
   });
