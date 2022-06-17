@@ -65,3 +65,41 @@ transform: {
 
 npm run test -- --coverage
 npm run tsc -- --noEmit
+
+# npm install -D typescript-transform-paths
+# npm install -D ttypescript
+
+npm install create-ts-index --save-dev
+
+# node_modules/.bin/cti ./src/category/domain
+
+npm run cti:@core
+
+# apos rebuild depois de colocar no dockerfile o run do nestjs, abrir o terminal
+nest new nestjs
+cd nestjs
+npm run start:dev
+http://localhost:3000
+
+# npm install axios --workspace micro-videos
+# npm install axios -w @fc/micro-videos
+# npm run test --workspaces
+
+npm run build -w @fc/micro-videos
+
+cd src/nestjs
+nest g resource 
+# --> categories
+# --> REST API
+# --> Yes
+
+npm run test -- --projects src/@core
+npm run test -- --projects src/nestjs
+
+npm install @swc/jest --save-dev -w nestjs
+npm install @swc/core --save-dev -w nestjs
+
+npm install sequelize sequelize-typescript -w @fc/micro-videos
+npm install sqlite3 -w @fc/micro-videos
+npm install chance -w @fc/micro-videos
+npm install @types/chance -w @fc/micro-videos --save-dev
