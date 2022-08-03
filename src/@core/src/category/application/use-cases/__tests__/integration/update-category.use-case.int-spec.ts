@@ -1,14 +1,19 @@
 import {UpdateCategoryUseCase} from "../../update-category.use-case";
-import CategoryInMemoryRepository from "../../../../infra/db/in-memory/category-in-memory.repository";
 import NotFoundError from "../../../../../@seedwork/domain/errors/not-found.error";
-import { Category } from "../../../../domain/entities/category";
+import { CategorySequelize } from "#category/infra/db/sequelize/category-sequelize";
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
+import _chance from 'chance';
 
-describe("UpdateCategoryUseCase Unit Tests", () => {
+const { CategorySequelizeRepository, CategoryModel } = CategorySequelize;
+
+describe("UpdateCategoryUseCase Integration Tests", () => {
   let useCase: UpdateCategoryUseCase.UseCase;
-  let repository: CategoryInMemoryRepository;
+  let repository: CategorySequelize.CategorySequelizeRepository;
+
+  setupSequelize({models: [CategoryModel]});
 
   beforeEach(() => {
-    repository = new CategoryInMemoryRepository();
+    repository = new CategorySequelizeRepository(CategoryModel);
     useCase = new UpdateCategoryUseCase.UseCase(repository);
   });
 
@@ -19,18 +24,15 @@ describe("UpdateCategoryUseCase Unit Tests", () => {
   });
 
   it("should update a category", async () => {
-    const spyUpdate = jest.spyOn(repository, "update");
-    const entity = new Category({ name: "Movie" });
-    repository.items = [entity];
+    const model = await CategoryModel.factory().create();
 
-    let output = await useCase.execute({ id: entity.id, name: "test", description: null });
-    expect(spyUpdate).toHaveBeenCalledTimes(1);
+    let output = await useCase.execute({ id: model.id, name: "test", description: null });
     expect(output).toStrictEqual({
-      id: entity.id,
+      id: model.id,
       name: "test",
       description: null,
       is_active: true,
-      created_at: entity.created_at,
+      created_at: model.created_at,
     });
     
     type Arrange = {
@@ -51,89 +53,89 @@ describe("UpdateCategoryUseCase Unit Tests", () => {
     const arrange: Arrange[] = [
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: "some description",
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: "some description",
           is_active: true,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: true,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: false,
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: false,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: false,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: true,
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: null,
           is_active: true,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
       {
         input: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: "some description",
           is_active: false,
         },
         expected: {
-          id: entity.id,
+          id: model.id,
           name: "test",
           description: "some description",
           is_active: false,
-          created_at: entity.created_at,
+          created_at: model.created_at,
         },
       },
     ];
@@ -146,7 +148,7 @@ describe("UpdateCategoryUseCase Unit Tests", () => {
         is_active: i.input.is_active,
       });
       expect(output).toStrictEqual({
-        id: entity.id,
+        id: model.id,
         name: i.expected.name,
         description: i.expected.description,
         is_active: i.expected.is_active,

@@ -103,3 +103,14 @@ npm install sequelize sequelize-typescript -w @fc/micro-videos
 npm install sqlite3 -w @fc/micro-videos
 npm install chance -w @fc/micro-videos
 npm install @types/chance -w @fc/micro-videos --save-dev
+
+npm run test:cov -w @fc/micro-videos
+
+npm install -w @fc/micro-videos dotenv
+
+npm install @nestjs/config -w nestjs
+
+cd src/nestjs
+nest g module config
+
+npm install joi -w nestjs
