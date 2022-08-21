@@ -6,10 +6,12 @@ import {
   ListCategoriesUseCase,
   DeleteCategoryUseCase,
 } from '@fc/micro-videos/category/application';
-//import CategoryRepository from '@fc/micro-videos/category/domain';
-import CategoryRepository from '@fc/micro-videos/dist/category/domain/repository/category.repository';
-import { CategoryInMemoryRepository } from '@fc/micro-videos/category/infra';
-import { CategorySequelize } from '@fc/micro-videos/category/infra';
+import { CategoryRepository } from '@fc/micro-videos/category/domain';
+//import CategoryRepository from '@fc/micro-videos/dist/category/domain/repository/category.repository';
+import { 
+  CategoryInMemoryRepository,
+  CategorySequelize, 
+} from '@fc/micro-videos/category/infra';
 import { getModelToken } from '@nestjs/sequelize';
 
 export namespace CATEGORY_PROVIDERS {
@@ -24,6 +26,10 @@ export namespace CATEGORY_PROVIDERS {
         return new CategorySequelize.CategoryRepository(categoryModel);
       },
       inject: [getModelToken(CategorySequelize.CategoryModel)],
+    };
+    export const CATEGORY_REPOSITORY = {
+      provide: 'CategoryRepository',
+      useClass: CategoryRepository,
     };
   }
 

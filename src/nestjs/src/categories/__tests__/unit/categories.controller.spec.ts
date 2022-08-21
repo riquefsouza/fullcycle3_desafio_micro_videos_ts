@@ -5,9 +5,10 @@ import {
   GetCategoryUseCase,
   ListCategoriesUseCase,
 } from '@fc/micro-videos/category/application';
-import { CategoriesController } from '../categories.controller';
-import { CreateCategoryDto } from '../dto/create-category.dto';
-import { UpdateCategoryDto } from '../dto/update-category.dto';
+import { CategoryPresenter } from 'src/categories/presenter/category.presenter';
+import { CategoriesController } from '../../categories.controller';
+import { CreateCategoryDto } from '../../dto/create-category.dto';
+import { UpdateCategoryDto } from '../../dto/update-category.dto';
 
 describe('CategoriesController Unit Tests', () => {
   let controller: CategoriesController;
@@ -34,9 +35,11 @@ describe('CategoriesController Unit Tests', () => {
       description: 'some description',
       is_active: true,
     };
-    const output = await controller.create(input);
+    const presenter = await controller.create(input);
     expect(mockCreateUseCase.execute).toHaveBeenCalledWith(input);
-    expect(expectedOutput).toStrictEqual(output);
+    expect(presenter).toBeInstanceOf(CategoryPresenter);
+    //expect(expectedOutput).toStrictEqual(output);
+    expect(presenter).toStrictEqual(new CategoryPresenter(expectedOutput));
   });
 
   it('should updates a category', async () => {

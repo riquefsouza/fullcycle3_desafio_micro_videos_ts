@@ -124,3 +124,6 @@ nest g module database
 npm install @nestjs/sequelize -w nestjs
 
 npm install mysql2 -w @fc/micro-videos
+
+npm install class-transformer -w nestjs
+

@@ -20,11 +20,14 @@ import {
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { SearchCategoryDto } from './dto/search-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryPresenter } from './presenter/category.presenter';
 
 //Unit tests
 
 // Inject - casos - mongoose, typeorm
 //unidade - request e response
+// testes em controllers - end to end, mais caro, mais burcratico e mais demorado
+// integracao
 @Controller('categories')
 export class CategoriesController {
   @Inject(CreateCategoryUseCase.UseCase)
@@ -46,7 +49,8 @@ export class CategoriesController {
 
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.createUseCase.execute(createCategoryDto);
+    const output = await this.createUseCase.execute(createCategoryDto);
+    return new CategoryPresenter(output);
   }
 
   @Get()
