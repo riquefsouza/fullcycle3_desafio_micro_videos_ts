@@ -114,3 +114,13 @@ cd src/nestjs
 nest g module config
 
 npm install joi -w nestjs
+
+npm run cti:make -w @fc/micro-videos
+npm run build -w @fc/micro-videos
+rpm run start:dev
+
+cd src/nestjs
+nest g module database
+npm install @nestjs/sequelize -w nestjs
+
+npm install mysql2 -w @fc/micro-videos
