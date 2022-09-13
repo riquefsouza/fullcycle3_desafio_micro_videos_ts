@@ -38,8 +38,8 @@ describe('CategoriesController Unit Tests', () => {
     const presenter = await controller.create(input);
     expect(mockCreateUseCase.execute).toHaveBeenCalledWith(input);
     expect(presenter).toBeInstanceOf(CategoryPresenter);
-    //expect(expectedOutput).toStrictEqual(output);
     expect(presenter).toStrictEqual(new CategoryPresenter(expectedOutput));
+    //expect(expectedOutput).toStrictEqual(output);
   });
 
   it('should updates a category', async () => {
@@ -61,9 +61,10 @@ describe('CategoriesController Unit Tests', () => {
       description: 'some description',
       is_active: true,
     };
-    const output = await controller.update(id, input);
+    const presenter = await controller.update(id, input);
     expect(mockUpdateUseCase.execute).toHaveBeenCalledWith({ id, ...input });
-    expect(expectedOutput).toStrictEqual(output);
+    expect(presenter).toBeInstanceOf(CategoryPresenter);
+    expect(presenter).toStrictEqual(new CategoryPresenter(expectedOutput));
   });
 
   it('should deletes a category', async () => {
@@ -94,9 +95,10 @@ describe('CategoriesController Unit Tests', () => {
     };
     //@ts-expect-error
     controller['getUseCase'] = mockGetUseCase;
-    const output = await controller.findOne(id);
+    const presenter = await controller.findOne(id);
     expect(mockGetUseCase.execute).toHaveBeenCalledWith({ id });
-    expect(expectedOutput).toStrictEqual(output);
+    expect(presenter).toBeInstanceOf(CategoryPresenter);
+    expect(presenter).toStrictEqual(new CategoryPresenter(expectedOutput));
   });
 
   it('should list categories', async () => {
